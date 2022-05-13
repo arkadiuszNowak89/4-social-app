@@ -4,38 +4,29 @@ import { useState } from 'react';
 import { checkPassword, removeWhiteSpaces } from '../data/tools';
 
 function SignUp() {
-  const [inputValName, setInputValName] = useState('');
-  const [inputValPass, setInputValPass] = useState('');
+  const [inputData, setInputData] = useState({
+    name: '',
+    email: '',
+    pass: '',
+    passControl: '',
+  });
 
-  const controlName = (e) => {
-    const input = e.target;
-    // In case of write or paste:
-    let val = removeWhiteSpaces(input.value);
+  const controlData = (e) => {
+    const name = e.target.name;
+    let val = e.target.value;
+    if (name === 'name') val = removeWhiteSpaces(val);
 
-    setInputValName(val);
+    setInputData({
+      ...inputData,
+      [name]: val,
+    });
   };
 
-  // TODO:
-  const controlPass = (e) => {
-    const input = e.target;
-    // In case of write or paste:
-
-    setInputValPass(e.target.value);
-  };
-
-  // TODO:
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Zmienić ref na onChange do state
-    const pass = e.target.querySelector('[name="password"]').value;
-    const passControl = e.target.querySelector(
-      '[name="passwordControl"]'
-    ).value;
 
-    console.log(inputValPass);
-
-    if (!checkPassword(pass)) console.log('Wrong pass');
-    if (pass !== passControl) console.log('Rozne hasla');
+    if (!checkPassword(inputData.pass)) console.log('Wrong pass');
+    if (inputData.pass !== inputData.passControl) console.log('Rozne hasla');
   };
 
   return (
@@ -46,23 +37,30 @@ function SignUp() {
           name='name'
           type='text'
           minLength={4}
-          value={inputValName}
-          onChange={controlName}
+          value={inputData.name}
+          onChange={controlData}
           required
         />
-        <input className='input' name='email' type='email' required />
         <input
           className='input'
-          name='password'
+          name='email'
+          type='email'
+          onChange={controlData}
+          required
+        />
+        <input
+          className='input'
+          name='pass'
           type='password'
           minLength={6}
-          onChange={controlPass}
+          onChange={controlData}
           required
         />
         <input
           className='input'
-          name='passwordControl'
+          name='passControl'
           type='password'
+          onChange={controlData}
           required
         />
         <button type='submit'>Sign Up!</button>

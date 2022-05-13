@@ -16,13 +16,12 @@ function App() {
     <Router>
       <Nav />
       <Routes>
-        <Route path='/' element={<Main />}>
-          <Route path='loggedout' element={<LoggedOut />} />
-          <Route path='login' element={<Login />} />
-          <Route path='signup' element={<SignUp />} />
-          <Route element={<Home />} />
-          <Route path='*' element={<ErrorPage />} />
-        </Route>
+        <Route path='/' element={<Main />}></Route>
+        <Route path='loggedout' element={<LoggedOut />} />
+        <Route path='login' element={<Login />} />
+        <Route path='signup' element={<SignUp />} />
+        <Route element={<Home />} />
+        <Route path='*' element={<ErrorPage />} />
       </Routes>
     </Router>
   );
