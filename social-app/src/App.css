@@ -1,0 +1,13 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+body {
+  background-image: url(./img/wp2726525.webp);
+  background-size: cover;
+  background-position: 50px;
+  background-position-y: 100px;
+}
