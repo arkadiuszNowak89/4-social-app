@@ -7,8 +7,8 @@
 body {
   background-image: url(./img/wp2726525.webp);
   background-size: cover;
-  background-position: 50px;
-  background-position-y: 100px;
+  background-position-y: 10vh;
+  background-position-x: 15vh;
 }
 
 div {

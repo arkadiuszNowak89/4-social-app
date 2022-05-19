@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './SignUp.css';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { checkPassword, removeWhiteSpaces } from '../data/tools';
+import { API } from '../data/API';
+import { WRONG_PASS_MSG, DIFF_PASS_MSG, SHOW_MSG_TIME } from '../data/config';
+import InfoBox from '../components/InfoBox';
 
 function SignUp() {
   const [inputData, setInputData] = useState({
@@ -10,6 +13,8 @@ function SignUp() {
     pass: '',
     passControl: '',
   });
+  const [msg, setMsg] = useState('');
+  const navi = useNavigate();
 
   const controlData = (e) => {
     const name = e.target.name;
@@ -24,14 +29,47 @@ function SignUp() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    let flag = true;
 
-    if (!checkPassword(inputData.pass)) console.log('Wrong pass');
-    if (inputData.pass !== inputData.passControl) console.log('Rozne hasla');
+    if (inputData.pass !== inputData.passControl) {
+      flag = false;
+      setMsg(DIFF_PASS_MSG);
+    }
+    if (!checkPassword(inputData.pass)) {
+      flag = false;
+      setMsg(WRONG_PASS_MSG);
+    }
+
+    if (flag) {
+      const signUpAPI = new API('signup');
+      signUpAPI.setData({
+        username: inputData.name,
+        email: inputData.email,
+        password: inputData.pass,
+      });
+      signUpAPI.getData(handleAPIAnswer);
+    }
+  };
+
+  const handleAPIAnswer = (res) => {
+    setMsg(
+      `${
+        res.data.signedup
+          ? 'You have a new account!'
+          : Object.values(res.data.message)[0][0]
+      }`
+    );
+
+    setTimeout(() => {
+      setMsg('');
+      if (res.data.signedup) navi('/login');
+    }, SHOW_MSG_TIME);
   };
 
   return (
     <div>
       <form className='signup-form' onSubmit={handleSubmit}>
+        {msg && <InfoBox msg={msg} />}
         <input
           className='input'
           name='name'
@@ -52,7 +90,6 @@ function SignUp() {
           className='input'
           name='pass'
           type='password'
-          minLength={6}
           onChange={controlData}
           required
         />

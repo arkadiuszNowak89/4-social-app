@@ -1,5 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Main from './pages/Main';
@@ -12,15 +12,18 @@ import ErrorPage from './pages/ErrorPage';
 import Nav from './components/Nav';
 
 function App() {
+  const loginFlag = localStorage.getItem('chatterfield');
+  const [loginGate, setLoginGate] = useState(loginFlag && true);
+
   return (
     <Router>
-      <Nav />
+      <Nav loginGate={loginGate} setLoginGate={setLoginGate} />
       <Routes>
         <Route path='/' element={<Main />}></Route>
         <Route path='loggedout' element={<LoggedOut />} />
-        <Route path='login' element={<Login />} />
+        <Route path='login' element={<Login setLoginGate={setLoginGate} />} />
         <Route path='signup' element={<SignUp />} />
-        <Route element={<Home />} />
+        <Route path='home' element={<Home />} />
         <Route path='*' element={<ErrorPage />} />
       </Routes>
     </Router>

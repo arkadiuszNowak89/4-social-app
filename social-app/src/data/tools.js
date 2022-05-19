@@ -13,8 +13,9 @@ export function checkPassword(pass) {
   ['!', '#', '@', '$', '%'].forEach((symbol) => {
     if (pass.includes(symbol)) flag = true;
   });
-  if (!checkNum.test(pass)) flag = false;
-  if (!checkCapLet.test(pass)) flag = false;
+  // if (!checkNum.test(pass)) flag = false;
+  // if (!checkCapLet.test(pass)) flag = false;
+  // if (pass.length < 6) flag = false;
 
   return flag;
 }
