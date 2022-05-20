@@ -27,7 +27,7 @@ function Home() {
     olderThen: new API('olderThen', jwtToken),
     newerThen: new API('newerThen', jwtToken),
   };
-  const [postsAPI, setpostAPI] = useState(choosePostsType.last);
+  const [postsAPI, setpostsAPI] = useState(choosePostsType.last);
   const allFollowsAPI = new API('allfollows', jwtToken);
   const disfollowAPI = new API('disfollow', jwtToken);
   const recommendsAPI = new API('recommendations', jwtToken);
@@ -114,21 +114,18 @@ function Home() {
     recommendsAPI.getData(displayUsersList);
   };
 
-  //TODO:
   const managerHandler = (type, data) => {
     if (type === 'newest') {
       const API = choosePostsType.last;
-      setpostAPI(API);
+      setpostsAPI(API);
       API.getData(displayPosts);
       return;
     }
     if (type === 'add') {
-      const API = choosePostsType.last;
-      setpostAPI(API);
       newPostAPI.setData({ content: data[type] });
       newPostAPI.getData((res) => {
         if (res.status === 200) {
-          API.getData(displayPosts);
+          postsAPI.getData(displayPosts);
         }
       });
       return;
@@ -139,7 +136,7 @@ function Home() {
     if (type === 'till') API = choosePostsType.olderThen;
     if (!API) return;
 
-    setpostAPI(API);
+    setpostsAPI(API);
     API.setData({ date: data[type] });
     API.getData(displayPosts);
   };

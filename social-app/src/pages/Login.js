@@ -33,7 +33,8 @@ function Login(props) {
   };
 
   const handleAPIAnswer = (res) => {
-    if (res.data.error) {
+    console.log(res);
+    if (res.data.error || res.status !== 200) {
       setMsg('Wrong login or password');
       setTimeout(() => setMsg(''), SHOW_MSG_TIME);
     } else {

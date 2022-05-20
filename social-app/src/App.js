@@ -20,7 +20,10 @@ function App() {
       <Nav loginGate={loginGate} setLoginGate={setLoginGate} />
       <Routes>
         <Route path='/' element={<Main />}></Route>
-        <Route path='loggedout' element={<LoggedOut />} />
+        <Route
+          path='loggedout'
+          element={<LoggedOut setLoginGate={setLoginGate} />}
+        />
         <Route path='login' element={<Login setLoginGate={setLoginGate} />} />
         <Route path='signup' element={<SignUp />} />
         <Route path='home' element={<Home />} />
